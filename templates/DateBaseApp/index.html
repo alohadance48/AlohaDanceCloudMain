@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlohadancesCloud</title>
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка сайта -->
+        <header>
+            <h1>AlohadancesCloud</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" id="filesTab">Файлы</a></li>
+                    <li><a href="#" id="profileTab">Профиль</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Боковая панель -->
+        <div class="sidebar">
+            <h2>Папки</h2>
+            <ul>
+                <li><a href="#"><i class="fas fa-folder"></i> Документы</a></li>
+                <li><a href="#"><i class="fas fa-folder"></i> Изображения</a></li>
+                <li><a href="#"><i class="fas fa-folder"></i> Музыка</a></li>
+            </ul>
+        </div>
+
+        <!-- Основной контент -->
+        <main>
+            <!-- Секция файлов -->
+            <div id="filesSection">
+                <h2>Ваши файлы</h2>
+                <div class="upload-section">
+                    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" id="fileInput" name="file" required>
+                        <button type="submit">Загрузить файл</button>
+                    </form>
+                </div>
+                <div class="file-list"></div>
+            </div>
+
+            <!-- Секция профиля -->
+            <div id="profileSection" style="display: none;">
+                <h2>Профиль пользователя</h2>
+                <div class="profile-info">
+                    <label>Имя пользователя:</label>
+                    <p>{{ username }}</p>  <!-- Отображение имени пользователя -->
+                </div>
+                <div class="profile-info">
+                    <label>Email:</label>
+                    <p>{{ email }}</p>  <!-- Отображение email -->
+                </div>
+                <div class="profile-info">
+                    <label>Статус:</label>
+                    <p class="status">{{ status }}</p>  <!-- Отображение статуса -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>

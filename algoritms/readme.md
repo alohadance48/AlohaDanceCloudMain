@@ -1,0 +1,1 @@
+## Схема.json можно открыть на https://programforyou.ru/block-diagram-redactor

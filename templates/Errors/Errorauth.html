@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/Errors/Errorauth.css' %}">
+    <title>Ошибка авторизации</title>
+</head>
+<body>
+    <div class="container auth-error">
+        <h1>Ошибка авторизации</h1>
+        <div class="error-message">
+            <p>Неверные учетные данные. Пожалуйста, проверьте ваш логин и пароль.</p>
+        </div>
+        <button onclick="goBack()">Назад</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    width: 400px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.error-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.delete-error .error-message {
+    background-color: #ff4d4d; /* Красный фон для ошибки удаления */
+}
+
+.auth-error .error-message {
+    background-color: #ffcc00; /* Желтый фон для ошибки авторизации */
+}
+
+.form-error .error-message {
+    background-color: #ff9900; /* Оранжевый фон для ошибки заполнения формы */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #6200ea; /* Цвет кнопки */
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3700b3; /* Цвет кнопки при наведении */
+}

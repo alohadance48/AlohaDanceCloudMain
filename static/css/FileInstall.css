@@ -1,0 +1,62 @@
+/* Основные стили для body */
+body {
+    background-color: #121212; /* Темный фон */
+    color: #ffffff; /* Светлый текст */
+    font-family: 'Roboto', sans-serif; /* Шрифт */
+    display: flex; /* Используем flexbox для центрирования */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Центрирование по вертикали */
+    height: 100vh; /* Высота на весь экран */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Стили для контейнера формы */
+.form-container {
+    background-color: #1e1e1e; /* Темно-серый фон формы */
+    padding: 20px; /* Отступы внутри формы */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Тень */
+    width: 400px; /* Ширина контейнера */
+    box-sizing: border-box; /* Учитываем отступы и границы в ширине */
+}
+
+/* Стили для полей ввода */
+input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+    width: 100%; /* Ширина 100% */
+    padding: 10px; /* Отступы внутри полей */
+    margin: 10px 0; /* Отступы между полями */
+    border: none; /* Убираем рамку */
+    border-radius: 4px; /* Закругленные углы */
+    background-color: #333333; /* Цвет полей ввода */
+    color: #ffffff; /* Цвет текста в полях */
+}
+
+/* Стили для кнопок */
+input[type="submit"] {
+    background-color: #6200ea; /* Цвет кнопки */
+    color: white; /* Цвет текста кнопки */
+    padding: 10px; /* Отступы внутри кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 4px; /* Закругленные углы */
+    cursor: pointer; /* Курсор в виде указателя */
+    width: 100%; /* Ширина кнопки 100% */
+}
+
+input[type="submit"]:hover {
+    background-color: #3700b3; /* Цвет кнопки при наведении */
+}
+
+/* Стили для ссылок */
+.link {
+    text-align: center; /* Центрирование ссылки */
+    margin-top: 10px; /* Отступ сверху */
+}
+
+.link a {
+    color: #5cb85c; /* Цвет ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.link a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}

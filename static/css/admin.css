@@ -1,0 +1,87 @@
+body {
+    background-color: #121212; /* Темный фон */
+    color: #ffffff; /* Светлый текст */
+    font-family: Arial, sans-serif; /* Шрифт */
+    display: flex; /* Используем flexbox для центрирования */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Центрирование по вертикали */
+    height: 100vh; /* Высота на весь экран */
+    margin: 0; /* Убираем отступы */
+}
+
+.container {
+    background-color: #1e1e1e; /* Темно-серый фон контейнера */
+    padding: 20px; /* Отступы внутри контейнера */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Тень */
+    width: 500px; /* Увеличенная ширина контейнера */
+    box-sizing: border-box; /* Учитываем отступы и границы в ширине */
+}
+
+h1 {
+    text-align: center; /* Центрирование заголовка */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+label {
+    margin-bottom: 5px; /* Отступ снизу для меток */
+    display: block; /* Отображение меток в блоке */
+}
+
+input[type="text"],
+textarea {
+    width: 100%; /* Ширина 100% */
+    padding: 10px; /* Отступы внутри полей */
+    margin-bottom: 15px; /* Отступы между полями */
+    border: 1px solid #333; /* Темная рамка */
+    border-radius: 4px; /* Закругленные углы */
+    background-color: #2a2a2a; /* Цвет полей ввода */
+    color: #ffffff; /* Цвет текста в полях */
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #4caf50; /* Цвет рамки при фокусе (зеленый) */
+    outline: none; /* Убираем стандартный контур */
+}
+
+button {
+    width: 100%; /* Ширина кнопки 100% */
+    padding: 10px; /* Отступы внутри кнопки */
+    background-color: #4caf50; /* Цвет кнопки (зеленый) */
+    border: none; /* Убираем рамку */
+    border-radius: 4px; /* Закругленные углы */
+    color: #ffffff; /* Цвет текста кнопки */
+    font-size: 16px; /* Размер шрифта */
+    cursor: pointer; /* Курсор в виде указателя */
+}
+
+button:hover {
+    background-color: #388e3c; /* Цвет кнопки при наведении (темно-зеленый) */
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Ширина контейнера на мобильных устройствах */
+    }
+}
+
+.link {
+    text-align: center; /* Центрирование ссылки */
+    margin-top: 10px; /* Отступ сверху */
+}
+
+.link a {
+    color: #4caf50; /* Цвет ссылки (зеленый) */
+    text-decoration: none; /* Убираем подчеркивание */
+    padding: 10px; /* Отступы вокруг ссылки */
+    border-radius: 4px; /* Закругленные углы */
+    transition: background-color 0.3s, color 0.3s; /* Плавный переход для фона и цвета */
+}
+
+.link a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+    background-color: rgba(76, 175, 80, 0.2); /* Полупрозрачный фон при наведении */
+    color: #388e3c; /* Темно-зеленый цвет текста при наведении */
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    <title>Удаление пользователя</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Удаление пользователя</h1>
+        <a href="{% url 'index' %}">На главную страницу</a> <!-- Ссылка на главную страницу -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Удалить</button>
+        </form>
+    </div>
+</body>
+</html>

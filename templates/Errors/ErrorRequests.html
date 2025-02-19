@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка запроса</title>
+    <link rel="stylesheet" href="{% static 'css/Errors/ErrorRequest.css' %}">
+</head>
+<body>
+
+<div class="error-container" id="errorContainer">
+    <h2 id="errorTitle">Ошибка запроса</h2>
+    <p id="errorMessage"></p>
+</div>
+
+<script src="{% static 'js/ErrorRequest.js' %}"></script>
+</body>
+</html>

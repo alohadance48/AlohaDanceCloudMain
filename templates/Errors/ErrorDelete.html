@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    { %load static % }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/Errors/ErrorsDelete.css' %}">
+    <title>Ошибка</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ошибка</h1>
+        <div class="error-message">
+            <p id="error-text">Произошла ошибка при удалении пользователя. Пожалуйста, попробуйте еще раз.</p>
+        </div>
+        <button onclick="goBack()">Назад</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

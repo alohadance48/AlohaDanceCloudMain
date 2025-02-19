@@ -1,0 +1,69 @@
+/* Основные стили для body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    margin: 0; /* Убираем отступы */
+    padding: 20px; /* Отступы */
+}
+
+/* Стили для заголовков */
+h1 {
+    text-align: center; /* Центрирование заголовка */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+/* Стили для форм */
+form {
+    max-width: 400px; /* Максимальная ширина формы */
+    margin: 0 auto; /* Центрирование формы */
+    background: #1e1e1e; /* Темный фон формы */
+    padding: 20px; /* Отступы внутри формы */
+    border-radius: 5px; /* Закругленные углы */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень */
+}
+
+/* Устанавливаем box-sizing для формы и полей ввода */
+form, input[type="text"], input[type="email"], input[type="password"] {
+    box-sizing: border-box; /* Учитываем отступы и границы в ширине */
+}
+
+/* Стили для полей ввода */
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%; /* Ширина 100% */
+    padding: 10px; /* Отступы внутри полей */
+    margin: 10px 0; /* Отступы между полями */
+    border: 1px solid #444; /* Темная рамка */
+    border-radius: 5px; /* Закругленные углы */
+    background-color: #333; /* Темный фон для полей ввода */
+    color: #ffffff; /* Белый текст в полях ввода */
+}
+
+/* Эффект при фокусе на полях ввода */
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #5cb85c; /* Цвет рамки при фокусе */
+    outline: none; /* Убираем стандартный контур */
+}
+
+/* Стили для кнопок */
+button {
+    width: 100%; /* Ширина 100% */
+    padding: 10px; /* Отступы внутри кнопки */
+    background-color: #5cb85c; /* Зеленая кнопка */
+    color: white; /* Белый текст */
+    border: none; /* Убираем рамку */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Курсор в виде указателя */
+}
+
+/* Эффект при наведении на кнопку */
+button:hover {
+    background-color: #4cae4c; /* Темнее при наведении */
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    form {
+        width: 90%; /* Ширина формы на мобильных устройствах */
+    }
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'css/Register.css' %}"> <!-- Подключаем CSS -->
+</head>
+<body>
+    <h1>Регистрация</h1>
+    <p style="text-align: center;">
+        <a href="{% url 'index' %}" style="color: #5cb85c; text-decoration: none;">На главную страницу</a>
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</body>
+</html>
