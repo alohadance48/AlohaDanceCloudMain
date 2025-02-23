@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlohadancesCloud</title>
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка сайта -->
+        <header>
+            <h1>AlohadancesCloud</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" id="usersTab">Пользователи</a></li>
+                    <li><a href="#" id="profileTab">Профиль</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Боковая панель -->
+        <div class="sidebar">
+            <h2>Папки</h2>
+            <ul>
+                <li><a href="#"><i class="fas fa-folder"></i> Документы</a></li>
+                <li><a href="#"><i class="fas fa-folder"></i> Изображения</a></li>
+                <li><a href="#"><i class="fas fa-folder"></i> Музыка</a></li>
+            </ul>
+        </div>
+
+        <!-- Основной контент -->
+        <main>
+            <!-- Секция пользователей -->
+            <div id="usersSection">
+                <h2>Пользователи</h2>
+                <div class="user-list"></div>
+            </div>
+
+            <!-- Секция профиля -->
+            <div id="profileSection" style="display: none;">
+                <h2>Профиль пользователя</h2>
+                <div class="profile-info">
+                    <label>Имя пользователя:</label>
+                    <p>{{ username }}</p>  <!-- Отображение имени пользователя -->
+                </div>
+                <div class="profile-info">
+                    <label>Email:</label>
+                    <p>{{ email }}</p>  <!-- Отображение email -->
+                </div>
+                <div class="profile-info">
+                    <label>Статус:</label>
+                    <p class="status">{{ status }}</p>  <!-- Отображение статуса -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="{% static 'js/root.js' %}"></script>
+</body>
+</html>
