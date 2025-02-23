@@ -20,3 +20,22 @@ class LogForDeleteUsers(models.Model):
         return self.comment
 
 
+class AntiBotsLog(models.Model):
+    IP = models.GenericIPAddressField(max_length=39)
+    status = models.CharField(max_length=4, default='bot')
+    def __str__(self):
+        return self.IP
+
+class IpAllUsers(models.Model):
+    IP = models.GenericIPAddressField(max_length=39)
+    trying = models.IntegerField(default=0)
+    time_blocked = models.DateTimeField(null=True)
+    time_unblocked = models.DateTimeField(null=True)
+    def __str__(self):
+        return self.IP
+
+class FileModel(models.Model):
+    file = models.FileField(upload_to='home/vlados/')
+
+
+
