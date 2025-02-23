@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin # Админка
 from django.urls import path ,re_path # Маршрутизация
 from DateBaseApp.views import * # Представления
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls), # Страница админа Django
@@ -24,6 +27,10 @@ urlpatterns = [
     re_path(r'^index/$',index,name='index'), # Главная страница
     re_path(r'^NewUser/$',register, name='register'), # Страница регистрации нового пользователя
     re_path(r'^AdminForm/$',admin_form, name='admin_form'), # Моя страница админа(удаление пользователей)
-    path('settings/', settings, name='setting'), # Система настройки моего backend
-
+    re_path(r'^root/$',root,name='root'),
+    path(r'download/<int:file_id>/', file_install, name='download_file'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
