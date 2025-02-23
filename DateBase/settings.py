@@ -55,11 +55,11 @@ MIDDLEWARE = [
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_NAME = 'alohacoocike'
 SESSION_COOKIE_AGE = 1200
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = False
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 
 ROOT_URLCONF = 'DateBase.urls'
@@ -138,5 +138,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #for pyplline
 FILES_FOR_DB = '/tmp'
+
+# For files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
