@@ -5,24 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AlohadancesCloud</title>
-    <!-- Подключение CSS -->
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Шапка сайта -->
         <header>
             <h1>AlohadancesCloud</h1>
             <nav>
                 <ul>
-                    <li><a href="#" id="filesTab">Файлы</a></li>
-                    <li><a href="#" id="profileTab">Профиль</a></li>
+                    <li><a href="#" id="filesTab" onclick="showSection('files')">Файлы</a></li>
+                    <li><a href="#" id="profileTab" onclick="showSection('profile')">Профиль</a></li>
                 </ul>
             </nav>
         </header>
 
-        <!-- Боковая панель -->
         <div class="sidebar">
             <h2>Папки</h2>
             <ul>
@@ -32,7 +29,6 @@
             </ul>
         </div>
 
-        <!-- Основной контент -->
         <main>
             <!-- Секция файлов -->
             <div id="filesSection">
@@ -41,10 +37,30 @@
                     <form id="uploadForm" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="file" id="fileInput" name="file" required>
-                        <button type="submit">Загрузить файл</button>
+                        <button type="submit" name="add_file">Загрузить файл</button> <!-- Кнопка загрузки файла -->
                     </form>
+                    <div id="uploadMessage"></div>
                 </div>
-                <div class="file-list"></div>
+                <div class="file-list">
+                    {% if files %}
+                        {% for file in files %}
+                            <div class="file-item">
+                                {{ file.file.name }} <!-- Отображение имени файла -->
+                                <div>
+                                    <a href="{% url 'download_file' file.id %}" class="download-button">Скачать</a> <!-- Кнопка скачивания файла -->
+                                    <form action="{% url 'index' %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="file_id" value="{{ file.id }}">
+                                        <input type="hidden" name="file_name" value="{{ file.file.name }}"> <!-- Скрытое поле для имени файла -->
+                                        <button type="submit" name="delete_file" class="delete-button">Удалить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Нет загруженных файлов.</p> <!-- Сообщение, если файлов нет -->
+                    {% endif %}
+                </div>
             </div>
 
             <!-- Секция профиля -->
@@ -68,5 +84,11 @@
 
     <!-- Подключение JavaScript -->
     <script src="{% static 'js/index.js' %}"></script>
+    <script>
+        function showSection(section) {
+            document.getElementById('filesSection').style.display = section === 'files' ? 'block' : 'none';
+            document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
+        }
+    </script>
 </body>
 </html>
