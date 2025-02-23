@@ -1,15 +1,21 @@
+from django.contrib.messages import success
 from django.shortcuts import render, redirect # Перенаправление и возврат шаблонов
 from django.http import HttpResponseForbidden,HttpResponseBadRequest,HttpResponse # Возврат ошибок и статусов
-from DateBaseApp.forms import LoginForm,FileInstall,FilesDispatch,RegisterForm,AdminForm,FormForSettings # Мои формы
+from DateBaseApp.forms import LoginForm,RegisterForm,AdminForm,FormForSettings,UploadForm # Мои формы
 from django.template.response import TemplateResponse # Возврат шаблонов
-from DateBaseApp.models import User, LogForDeleteUsers # Мои модели
+from DateBaseApp.models import User, LogForDeleteUsers,FileModel# Мои модели
 from django.contrib import messages # Сообщения
-from django.conf import settings # Настройки Django
+from django.shortcuts import redirect, get_object_or_404
 import bcrypt # Библиотека для шифрования данных
-
+import os
 
 
 # Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import User, FileModel  # Убедитесь, что вы импортируете необходимые модели
+import os
+
 def index(request):
     """
     Обрабатывает запрос на главную страницу.
@@ -27,31 +33,78 @@ def index(request):
     print("Index view called")
 
     # Проверяем, есть ли имя пользователя в сессии
-    if request.session.get('username'):
-        username = request.session.get('username')
-
-        if username:
-            print('User is authenticated, redirecting...')
+    username = request.session.get('username')
+    if username:
+        print('User is authenticated, processing request...')
+        try:
             user = User.objects.get(name=username)
             email = user.email
             status = user.status
+            all_files = FileModel.objects.all()
+
+            if request.method == "POST" and 'delete_file' in request.POST:
+                file_id = request.POST.get('file_id')
+                try:
+                    file_to_delete = FileModel.objects.get(id=file_id)
+                    file_to_delete.delete()
+                    os.remove(file_to_delete.file.path)  # Удаление файла из файловой системы
+                    files = FileModel.objects.all().order_by('id')
+                    for new_id, file in enumerate(files, start=1):
+                        file.id = new_id
+                        file.save()
+                    messages.success(request, 'File deleted successfully.')
+                except FileModel.DoesNotExist:
+                    messages.error(request, 'File not found.')
+                except Exception as e:
+                    messages.error(request, f'Error deleting file: {str(e)}')
+
+            elif request.method == "POST" and 'add_file' in request.POST:
+                file_add = request.FILES['file']
+                file = UploadForm(request.POST, request.FILES)
+                if file.is_valid():
+                    file.save()
+                else:
+                    return redirect('index')
+
+            elif request.method == "GET" and 'donwload' in request.GET:
+                file_name = request.GET.get('file_name')
+                return file_install(request, file_name)
+
 
             # Создаем контекст для передачи в шаблон
             context = {
                 'email': email,
                 'status': status,
                 'username': username,
+                'files': all_files,
             }
-
             # Возвращаем ответ с шаблоном и контекстом
-            return TemplateResponse(request, 'DateBaseApp/index.html', context, status=200)
-        else:
-            print('No username found in session, redirecting to login...')
+            return render(request, 'DateBaseApp/index.html', context)
+
+        except User.DoesNotExist:
+            print('User does not exist, redirecting to login...')
+            messages.error(request, 'User does not exist.')
             return redirect('login')
     else:
         print('User is not authenticated, redirecting to login...')
-        messages.error(request, 'You are not logged in')
+        messages.error(request, 'You are not logged in.')
         return redirect('login')
+
+    # Если ни одно из условий не выполнено, возвращаем редирект на страницу входа
+    return redirect('login')
+
+
+def file_install(request, file_id):
+    # Получаем файл по ID, если файл не найден, будет возвращена 404 ошибка
+    file = get_object_or_404(FileModel, id=file_id)
+
+    # Открываем файл в бинарном режиме
+    with open(file.file.path, 'rb') as f:
+        response = HttpResponse(f.read(), content_type='application/octet-stream')
+        response[
+            'Content-Disposition'] = f'attachment; filename="{file.file.name}"'  # Используем имя файла из поля file
+        return response
+
 
 
 def login(request):
@@ -71,6 +124,7 @@ def login(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
+
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8') # Хеширование введенного пароля
             try:
                 """Попытка получить данные о пользователе """
@@ -84,6 +138,10 @@ def login(request):
                     request.session['username'] = username # Создание сессии
                     return redirect('index')  # redict на главную страницу
                 else:
+                    ip = request.META['REMOTE_ADDR']
+
+
+
                     """Если данные не совпадают, то возвращает на страницу авторизации,
                      это сделано для защиты от Bots"""
                     messages.error(request, 'Incorrect password') # Сообщение
@@ -99,6 +157,9 @@ def login(request):
             return redirect('login')
     else:
         """Если пользователь не отправил форму, то ему просто вернется наша страница с пустой формой """
+        if request.session.get('username'):
+            """Если у пользователя есть активная сессия, то она прекращается """
+            request.session.flush()
         form = LoginForm() # форма
         context = {
             'login_form': form,
@@ -207,49 +268,27 @@ def admin_form(request):
 
             except Exception as e:
                 print('Error:', e)
-                return TemplateResponse(request, 'Errors/ErrorRequests.html', status=502)
+                return TemplateResponse(request, 'Errors/ErrorRequests.html', status=500)
 
         else:
-            return TemplateResponse(request, 'Errors/ErrorRequests.html', status=502)
+            return TemplateResponse(request, 'Errors/ErrorRequests.html', status=500)
     else:
         return redirect('login')
 
 
-def settings(request):
-    """
-    Обрабатывает запросы на страницу настроек.
 
-    Проверяет, включены ли настройки.
-    Если настройки включены и метод запроса POST,
-    обрабатывает форму для создания нового пользователя.
 
-    Args:
-        request: Объект запроса.
-
-    Returns:
-        HttpResponse с сообщением об успешной настройке или
-        TemplateResponse с формой настроек.
-    """
-    if settings.START_SETTING:
-        if request.method == 'POST':
-            form = FormForSettings(request.POST)
-
-            if form.is_valid():
-                username = form.cleaned_data.get('username')
-                password = form.cleaned_data.get('password')
-                email = form.cleaned_data.get('email')
-
-                # Хешируем пароль
-                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-                # Создаем нового пользователя
-                User.objects.create(username=username, password=hashed_password, email=email, status='root')
-
-                return HttpResponse('<h1>Настройка завершена, пожалуйста, перезапустите проект с START_SETTING=False</h1>')
+def root(request):
+    if request.session.get('username'):
+        user = User.objects.get(name=request.session.get('username'))
+        if user.status == 'root':
+            return TemplateResponse(request,'DateBaseApp/root.html')
         else:
-            form = FormForSettings()
-            context = {'form': form}
-            return TemplateResponse(request, 'DateBaseApp/setting.html', context, status=200)
+            messages.success(request,'Error, do you have a root?')
+
+            return redirect('index') and TemplateResponse(request,'DateBaseApp/root.html')
     else:
         return redirect('login')
+
+
 
